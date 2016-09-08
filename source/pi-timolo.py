@@ -46,6 +46,7 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from fractions import Fraction
+from shutil import copyfile
   
 #==================================
 #      System Variables
@@ -710,6 +711,7 @@ def Main():
                                 takeDayImage(filename)
                             else:
                                 takeNightImage(filename)
+                        copyfile(filename,motionPath+"/"+imagePrefix+"latest.jpg")
                         motionNumCount = postImageProcessing(motionNumOn, motionNumStart, motionNumMax, motionNumCount, motionNumRecycle, motionNumPath, filename, daymode)
                     if motionFound:
                         # =========================================================================
