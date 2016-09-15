@@ -46,7 +46,6 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from fractions import Fraction
-from shutil import copyfile
   
 #==================================
 #      System Variables
@@ -564,9 +563,9 @@ def checkForMotion(data1, data2):
     motionDetected = False
     pixColor = 3 # red=0 green=1 blue=2 all=3  default=1
     if pixColor == 3:
-        pixChanges = (np.absolute(data1-data2)>threshold).sum()/3
+        pixChanges = (np.absolute(data1.astype(int)-data2.astype(int))>threshold).sum()/3
     else:
-        pixChanges = (np.absolute(data1[...,pixColor]-data2[...,pixColor])>threshold).sum()
+        pixChanges = (np.absolute(data1.astype(int)[...,pixColor]-data2.astype(int)[...,pixColor])>threshold).sum()
     if pixChanges > sensitivity:
         motionDetected = True
     if motionDetected:
@@ -711,7 +710,6 @@ def Main():
                                 takeDayImage(filename)
                             else:
                                 takeNightImage(filename)
-                        copyfile(filename,motionPath+"/"+imagePrefix+"latest.jpg")
                         motionNumCount = postImageProcessing(motionNumOn, motionNumStart, motionNumMax, motionNumCount, motionNumRecycle, motionNumPath, filename, daymode)
                     if motionFound:
                         # =========================================================================
